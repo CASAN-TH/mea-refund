@@ -1,42 +1,117 @@
-<div fxLayout="row wrap">
+<div fxLayout="row wrap" class="title-mg-bottom">
   <div fxFlex="20">
-    <img class="logo-size" src="../../assets/image/mea-logo.png" alt="mea logo image">
+    <img class="logo-full" src="../../assets/image/mea-logo.png" alt="mea logo image">
+  </div>
+</div>
+
+<div fxLayout="row wrap" class="bg-contain">
+  <div fxFlex="30%" class="title-center">
+    <img class="logo-full" src="../../assets/image/measy-logo.png" alt="measy logo image">
+  </div>
+  <div fxFlex="70%" class="title-center font-title">
+    การคืนเงินประกันการใช้ไฟฟ้า
   </div>
 </div>
 
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
-  <mat-step [stepControl]="firstFormGroup">
-    <form [formGroup]="firstFormGroup">
-      <ng-template matStepLabel>Fill out your name</ng-template>
-      <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
-      </mat-form-field>
-      <div>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="secondFormGroup">
-    <form [formGroup]="secondFormGroup">
-      <ng-template matStepLabel>Fill out your address</ng-template>
-      <mat-form-field>
-        <mat-label>Address</mat-label>
-        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-               required>
-      </mat-form-field>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
   <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
+
+    <ng-template matStepLabel>ข้อมูลผู้ใช้สิทธิ์</ng-template>
+
+    <div fxLayout="row wrap">
+      <div fxFlex="100" class="cus-title">
+        ข้อมูลผู้ใช้สิทธิ์
+      </div>
+    </div>
+
+    <mat-form-field class="form-style">
+      <mat-label>เลขที่ประจำตัวประชาชน( 13 หลัก )</mat-label>
+      <input matInput type="tel" maxlength="13" [(ngModel)]="cardId">
+    </mat-form-field>
+
+    <div>
+      <mat-checkbox [(ngModel)]="acceptCheckCardId" (ngModelChange)="fillCardId()" [disabled]="!cardId"></mat-checkbox>
+      <mat-label class="accept-text">ยินยอมให้ตรวจสอบข้อมูลของท่านจากกรมการปกครองกระทรวงมหาดไทย</mat-label>
+      <mat-label class="btn-more-detail">ดูเพิ่มเติม</mat-label>
+    </div>
+
+    <div class="btn-container">
+      <button mat-raised-button color="warn" matStepperNext
+        [disabled]="acceptCheckCardId === false">ยืนยันการรับเงิน</button>
+    </div>
+
+  </mat-step>
+
+  <mat-step>
+
+    <ng-template matStepLabel>ช่องทางการรับเงินคืนเงินประกัน</ng-template>
+
+    <div fxLayout="row wrap">
+      <div fxFlex="100" class="cus-title">
+        ช่องทางการรับเงินคืนเงินประกัน
+      </div>
+    </div>
+
+    <div class="check-container">
+      <div *ngFor="let item of waysData;let i = index">
+        <mat-checkbox [(ngModel)]="item.checked" (click)="selectWay(i, item)">{{item.name}}</mat-checkbox>
+      </div>
+
+      <mat-form-field *ngIf="waySelected.name === 'โอนเงินเข้าบัญชี'">
+        <mat-label>เลขที่บัญชีธนาคาร</mat-label>
+        <input matInput>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row wrap">
+      <div fxFlex="100" class="cus-title">
+        ช่องทางการรับเงินคืนเงินประกัน
+      </div>
+    </div>
+
+    <mat-form-field>
+      <mat-label>เบอร์โทรศัพย์</mat-label>
+      <input matInput>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>อีเมล</mat-label>
+      <input matInput>
+    </mat-form-field>
+
+    <div class="btn-container">
+      <button mat-raised-button color="warn" matStepperNext>ยืนยันการรับเงิน</button>
+    </div>
+
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>เสร็จสิ้น</ng-template>
+
+    <div fxLayout="row wrap">
+      <div fxFlex="30%"></div>
+      <div fxFlex="40%">
+        <img class="logo-full" src="../../assets/image/accept.png" alt="accept image">
+      </div>
+      <div fxFlex="30%"></div>
+    </div>
+
+    <div class="done-text-center">
+      <div>
+        ระบบได้ทำการ xxxxxx
+      </div>
+      <div>
+        เลขที่อ้างอิง xxxxxxxxxxxxxxxxxxxxxxxx
+      </div>
+      <div>
+        วันที่: 01/05/2020 เวลา 18:06 น.
+      </div>
+    </div>
+
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button (click)="stepper.reset()">Reset</button>
     </div>
+
   </mat-step>
 </mat-horizontal-stepper>
