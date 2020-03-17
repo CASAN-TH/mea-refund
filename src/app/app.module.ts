@@ -10,6 +10,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { HomeComponent } from './home/home.component';
 
@@ -38,6 +39,7 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
+    FlexLayoutModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: false }
