@@ -15,6 +15,8 @@ export class HomeComponent implements OnInit {
   checkNoCardId = false;
   formCheckSecond = false;
 
+  secondFormData: any = {};
+
   waysData: Array<any>;
   waySelected: any = {};
 
@@ -36,28 +38,27 @@ export class HomeComponent implements OnInit {
   checkCardId() {
     if (this.acceptCheckCardId === true) {
       // this.cardId = this.cardId.padStart(13, '0');
-      const res =
-        undefined;
-      // {
-      //   data: {
-      //     items: [
-      //       {
-      //         "refno": "5303000001",
-      //         "refdate": "15/03/2553",
-      //         "contactname": "นายหลักประกัน การใช้ไฟฟ้า",
-      //         "contacttype": "waitapprove",
-      //         "amount": 2000
-      //       },
-      //       {
-      //         "refno": "5502001001",
-      //         "refdate": "14/02/2554",
-      //         "contactname": "นายการใช้ไฟฟ้า ฉบับใหม่",
-      //         "contacttype": "waitapprove",
-      //         "amount": 300
-      //       }
-      //     ]
-      //   }
-      // };
+      const noData = true // for mockup no service
+      const res = noData ? undefined : {
+        data: {
+          items: [
+            {
+              "refno": "5303000001",
+              "refdate": "15/03/2553",
+              "contactname": "นายหลักประกัน การใช้ไฟฟ้า",
+              "contacttype": "waitapprove",
+              "amount": 2000
+            },
+            {
+              "refno": "5502001001",
+              "refdate": "14/02/2554",
+              "contactname": "นายการใช้ไฟฟ้า ฉบับใหม่",
+              "contacttype": "waitapprove",
+              "amount": 300
+            }
+          ]
+        }
+      };
 
       if (res) {
         this.billData = res.data
@@ -72,13 +73,47 @@ export class HomeComponent implements OnInit {
       } else {
         this.checkNoCardId = true
       }
-
     };
   };
 
-  changeForm(){
+  changeForm() {
     this.formCheckSecond = true
   }
+
+  applyFilter(event: any) {
+    // console.log(this.secondFormData)
+    if (this.secondFormData.ca_ref_no1.length === 9 && this.secondFormData.installation.length === 8) {
+      try {
+        const noData = false // for mockup no service
+        const res = noData ? undefined : {
+          data: {
+            items: [
+              {
+                "refno": "5303000001",
+                "refdate": "15/03/2553",
+                "contactname": "นายหลักประกัน การใช้ไฟฟ้า",
+                "contacttype": "waitapprove",
+                "amount": 2000
+              },
+              {
+                "refno": "5502001001",
+                "refdate": "14/02/2554",
+                "contactname": "นายการใช้ไฟฟ้า ฉบับใหม่",
+                "contacttype": "waitapprove",
+                "amount": 300
+              }
+            ]
+          }
+        };
+
+        if (res) {
+          this.billData = res.data
+        };
+      } catch (error) {
+        throw (error)
+      };
+    };
+  };
 
   selectWay(idx, item) {
     for (let i = 0; i < this.waysData.length; i++) {

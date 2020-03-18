@@ -61,38 +61,40 @@
 
       <mat-form-field class="form-style">
         <mat-label>บัญชีแสดงสัญญา( 9 หลัก )</mat-label>
-        <input matInput maxlength="9">
+        <input matInput maxlength="9" [(ngModel)]="secondFormData.ca_ref_no1" (keyup)="applyFilter($event)">
       </mat-form-field>
       <mat-form-field class="form-style">
         <mat-label>รหัสเครื่องวัด( 8 หลัก )</mat-label>
-        <input matInput maxlength="8">
+        <input matInput maxlength="8" [(ngModel)]="secondFormData.installation" (keyup)="applyFilter($event)">
       </mat-form-field>
 
-      <div fxLayout="row wrap">
-        <div fxFlex="100" class="cus-title">
-          เลือกฉบับที่ขอคืนตามสิทธิ
+      <div *ngIf="billData">
+        <div fxLayout="row wrap">
+          <div fxFlex="100" class="cus-title">
+            เลือกฉบับที่ขอคืนตามสิทธิ
+          </div>
+        </div>
+
+        <div fxLayout="row wrap" class="list-bill-contain" id="table" *ngFor="let item of billData.items">
+          <div fxFlex="6">
+            <mat-checkbox></mat-checkbox>
+          </div>
+          <div fxFlex="28">
+            {{item.refno}}
+          </div>
+          <div fxFlex="27">
+            {{item.refdate}}
+          </div>
+          <div fxFlex="30">
+            {{item.contactname}}
+          </div>
+          <div fxFlex="9">
+            {{item.amount | number}}
+          </div>
         </div>
       </div>
 
-      <div fxLayout="row wrap" class="list-bill-contain" id="table" *ngFor="let item of [1,2]">
-        <div fxFlex="6">
-          <mat-checkbox></mat-checkbox>
-        </div>
-        <div fxFlex="28">
-          5303000001
-        </div>
-        <div fxFlex="27">
-          15/03/2553
-        </div>
-        <div fxFlex="30">
-          นายหลักประกัน การใช้ไฟฟ้า
-        </div>
-        <div fxFlex="9">
-          2,000
-        </div>
-      </div>
-
-      <div class="btn-container">
+      <div class="btn-container" *ngIf="billData">
         <button mat-raised-button color="warn" matStepperNext>ยืนยันข้อมูล</button>
       </div>
     </div>
@@ -163,10 +165,6 @@
       <div>
         วันที่: 01/05/2020 เวลา 18:06 น.
       </div>
-    </div>
-
-    <div class="btn-container">
-      <button mat-raised-button color="warn">ย้อนกลับ</button>
     </div>
 
   </mat-step>
