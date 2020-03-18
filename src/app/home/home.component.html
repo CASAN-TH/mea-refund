@@ -16,28 +16,85 @@
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
   <mat-step>
 
-    <ng-template matStepLabel>ข้อมูลผู้ใช้สิทธิ์</ng-template>
+    <ng-template matStepLabel>ข้อมูลผู้ใช้สิทธิ</ng-template>
 
-    <div fxLayout="row wrap">
-      <div fxFlex="100" class="cus-title">
-        ข้อมูลผู้ใช้สิทธิ์
+    <div *ngIf="!formCheckSecond">
+      <div fxLayout="row wrap">
+        <div fxFlex="100" class="cus-title">
+          ข้อมูลผู้ใช้สิทธิ
+        </div>
+      </div>
+
+      <mat-form-field class="form-style">
+        <mat-label>เลขที่ประจำตัวประชาชน( 13 หลัก )</mat-label>
+        <input matInput maxlength="13" [(ngModel)]="cardId">
+      </mat-form-field>
+
+      <div class="accept-container">
+        <mat-checkbox [(ngModel)]="acceptCheckCardId" (ngModelChange)="checkCardId()" [disabled]="!cardId">
+        </mat-checkbox>
+        <mat-label class="accept-text">ยินยอมให้ตรวจสอบข้อมูลของท่านจากกรมการปกครองกระทรวงมหาดไทย</mat-label>
+        <mat-label class="btn-more-detail">ดูเพิ่มเติม</mat-label>
+      </div>
+
+      <div class="congrate-container" *ngIf="totalAmount">
+        <div class="congrate-text">
+          ยินดีด้วย...ท่านมีจำนวนคืนเงินประกันการใช้ไฟฟ้า
+        </div>
+        <div class="congrate-amount">
+          {{totalAmount}} <span class="amount-text">บาท</span>
+        </div>
+      </div>
+
+      <div class="btn-container" *ngIf="acceptCheckCardId === true">
+        <button mat-raised-button color="warn" *ngIf="!checkNoCardId" matStepperNext>ยืนยันการรับเงิน</button>
+        <button mat-raised-button color="warn" *ngIf="checkNoCardId" (click)="changeForm()">ตรวจสอบข้อมูล</button>
       </div>
     </div>
 
-    <mat-form-field class="form-style">
-      <mat-label>เลขที่ประจำตัวประชาชน( 13 หลัก )</mat-label>
-      <input matInput type="tel" maxlength="13" [(ngModel)]="cardId">
-    </mat-form-field>
+    <div *ngIf="formCheckSecond">
+      <div fxLayout="row wrap">
+        <div fxFlex="100" class="cus-title">
+          ข้อมูลผู้ใช้สิทธิ
+        </div>
+      </div>
 
-    <div>
-      <mat-checkbox [(ngModel)]="acceptCheckCardId" (ngModelChange)="fillCardId()" [disabled]="!cardId"></mat-checkbox>
-      <mat-label class="accept-text">ยินยอมให้ตรวจสอบข้อมูลของท่านจากกรมการปกครองกระทรวงมหาดไทย</mat-label>
-      <mat-label class="btn-more-detail">ดูเพิ่มเติม</mat-label>
-    </div>
+      <mat-form-field class="form-style">
+        <mat-label>บัญชีแสดงสัญญา( 9 หลัก )</mat-label>
+        <input matInput maxlength="9">
+      </mat-form-field>
+      <mat-form-field class="form-style">
+        <mat-label>รหัสเครื่องวัด( 8 หลัก )</mat-label>
+        <input matInput maxlength="8">
+      </mat-form-field>
 
-    <div class="btn-container">
-      <button mat-raised-button color="warn" matStepperNext
-        [disabled]="acceptCheckCardId === false">ยืนยันการรับเงิน</button>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" class="cus-title">
+          เลือกฉบับที่ขอคืนตามสิทธิ
+        </div>
+      </div>
+
+      <div fxLayout="row wrap" class="list-bill-contain" id="table" *ngFor="let item of [1,2]">
+        <div fxFlex="6">
+          <mat-checkbox></mat-checkbox>
+        </div>
+        <div fxFlex="28">
+          5303000001
+        </div>
+        <div fxFlex="27">
+          15/03/2553
+        </div>
+        <div fxFlex="30">
+          นายหลักประกัน การใช้ไฟฟ้า
+        </div>
+        <div fxFlex="9">
+          2,000
+        </div>
+      </div>
+
+      <div class="btn-container">
+        <button mat-raised-button color="warn" matStepperNext>ยืนยันข้อมูล</button>
+      </div>
     </div>
 
   </mat-step>
@@ -108,9 +165,8 @@
       </div>
     </div>
 
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
+    <div class="btn-container">
+      <button mat-raised-button color="warn">ย้อนกลับ</button>
     </div>
 
   </mat-step>

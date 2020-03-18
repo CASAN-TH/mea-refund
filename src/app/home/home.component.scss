@@ -1,3 +1,7 @@
+#table {
+  font-size: 3vw;
+}
+
 .mat-stepper-horizontal {
   margin-top: 8px;
 }
@@ -6,15 +10,36 @@
   .mat-step-icon-selected {
     background-color: #fe5001 !important;
   }
+
   .mat-step-icon {
     background-color: rgb(211, 211, 211);
   }
 }
 
-
-
 .form-style {
   margin-top: 16px;
+}
+
+.accept-container {
+  margin-top: 8px;
+}
+
+.congrate-container {
+  padding-top: 16px;
+  text-align: center;
+}
+
+.congrate-text {
+  font-size: 3.8vw;
+}
+
+.congrate-amount {
+  font-size: 5vw;
+  padding-top: 16px;
+
+  .amount-text {
+    font-size: 2vw;
+  }
 }
 
 .accept-text {
@@ -32,6 +57,7 @@
 
 .btn-container {
   margin-top: 16px;
+  margin-bottom: 16px;
   text-align: center;
 }
 
@@ -65,6 +91,12 @@
   background-color: #eaeaea;
   padding: 10px;
   text-align: center;
+}
+
+.list-bill-contain {
+  align-items: center;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 mat-form-field {
