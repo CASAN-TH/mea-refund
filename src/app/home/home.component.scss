@@ -1,71 +1,82 @@
 .mat-stepper-horizontal {
-    margin-top: 8px;
+  margin-top: 8px;
 }
 
+::ng-deep .mat-step-header {
+  .mat-step-icon-selected {
+    background-color: #fe5001 !important;
+  }
+  .mat-step-icon {
+    background-color: rgb(211, 211, 211);
+  }
+}
+
+
+
 .form-style {
-    margin-top: 16px;
+  margin-top: 16px;
 }
 
 .accept-text {
-    padding-left: 6px;
-    font-size: 14px;
+  padding-left: 6px;
+  font-size: 14px;
 }
 
 .btn-more-detail {
-    padding-left: 5px;
-    text-decoration: underline;
-    color: blue;
-    font-size: 14px;
-    cursor: pointer;
+  padding-left: 5px;
+  text-decoration: underline;
+  color: blue;
+  font-size: 14px;
+  cursor: pointer;
 }
 
 .btn-container {
-    margin-top: 16px;
-    text-align: center;
+  margin-top: 16px;
+  text-align: center;
 }
 
 .title-mg-bottom {
-    margin-bottom: 16px;
+  margin-bottom: 16px;
 }
 
 .logo-full {
-    width: 100%;
+  width: 100%;
 }
 
 .bg-contain {
-    width: 100vw;
-    position: relative;
-    left: -16px;
-    background-color: lightgray;
+  width: 100vw;
+  position: relative;
+  left: -16px;
+  background-color: lightgray;
 }
 
 .title-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .font-title {
-    font-weight: bold;
-    font-size: 4vw;
+  font-weight: bold;
+  font-size: 4vw;
 }
 
 .cus-title {
-    background-color: #eaeaea;
-    padding: 10px;
-    text-align: center;
+  background-color: #eaeaea;
+  padding: 10px;
+  text-align: center;
 }
 
 mat-form-field {
-    width: 100%;
+  width: 100%;
 }
 
 .check-container {
-    padding-left: 16px;
-    padding-top: 9px;
-    margin-bottom: 16px;
+  padding-left: 16px;
+  padding-top: 9px;
+  margin-bottom: 16px;
 }
 
 .done-text-center {
-    text-align: center;
+  text-align: center;
 }
