@@ -6,15 +6,36 @@
   margin-top: 8px;
 }
 
-::ng-deep .mat-step-header {
-  .mat-step-icon-selected {
-    background-color: #fe5001 !important;
-  }
 
-  .mat-step-icon {
-    background-color: rgb(211, 211, 211);
+::ng-deep .mat-horizontal-stepper-header {
+  height: 72px !important;
+  padding: 0 10px !important;
+  .mat-stepper-horizontal-line {
+      top: 10px !important;
   }
+  .mat-step-label {
+      position: fixed;
+      margin-top: 15px;
+      width: 200px !important;
+      white-space: pre-wrap;
+      text-align: center;
+  }
+  &::before {
+      width: 0;
+  }
+  // .mat-step-icon-selected {
+  //   background-color: #0e8c0c !important;
+  // }
+
+  // .mat-step-icon {
+  //   background-color: rgb(211, 211, 211);
+  // }
+
+  
 }
+
+
+
 
 .form-style {
   margin-top: 16px;
@@ -66,14 +87,13 @@
 }
 
 .logo-full {
-  width: 100%;
+  width: 70%;
 }
 
 .bg-contain {
   width: 100vw;
   position: relative;
   left: -16px;
-  background-color: lightgray;
 }
 
 .title-center {

@@ -1,156 +1,131 @@
-<div fxLayout="row wrap" class="title-mg-bottom">
-  <div fxFlex="20">
-    <img class="logo-full" src="../../assets/image/mea-logo.png" alt="mea logo image">
-  </div>
-</div>
-
-<div fxLayout="row wrap" class="bg-contain">
-  <div fxFlex="30%" class="title-center">
-    <img class="logo-full" src="../../assets/image/measy-logo.png" alt="measy logo image">
-  </div>
-  <div fxFlex="70%" class="title-center font-title">
-    การคืนเงินประกันการใช้ไฟฟ้า
-  </div>
-</div>
-
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
-  <mat-step>
+  <mat-step [stepControl]="firstFormGroup">
+    <!-- <ng-template matStepLabel>ข้อมูลสมาชิก</ng-template> -->
 
-    <ng-template matStepLabel>ข้อมูลผู้ใช้สิทธิ</ng-template>
-
-    <div *ngIf="!formCheckSecond">
+    <div>
       <div fxLayout="row wrap">
-        <div fxFlex="100" class="cus-title">
-          ข้อมูลผู้ใช้สิทธิ
+        <div fxFlex="100" fxLayoutAlign="start center">
+          ข้อมูลสมาชิก
         </div>
       </div>
+      <form name="firstFormGroup" [formGroup]="firstFormGroup" novalidate>
+        <mat-form-field class="form-style">
+          <mat-label>ชื่อ</mat-label>
+          <input
+            matInput
+            formControlName="firstName"
+            placeholder="ชูใจ"
+          />
+        </mat-form-field>
 
-      <mat-form-field class="form-style">
-        <mat-label>เลขที่ประจำตัวประชาชน( 13 หลัก )</mat-label>
-        <input matInput maxlength="13" [(ngModel)]="cardId">
-      </mat-form-field>
+        <mat-form-field class="form-style">
+          <mat-label>นามสกุล</mat-label>
+          <input
+            matInput
+            formControlName="lastName"
+            placeholder="รักษ์ดี"
+          />
+        </mat-form-field>
+
+        <mat-form-field class="form-style">
+          <mat-label>เลขที่ประจำตัวประชาชน( 13 หลัก )</mat-label>
+          <input
+            matInput
+            maxlength="13"
+            formControlName="personalCardID"
+            placeholder="ใช้เพื่อตรวจสอบว่าเป็นผู้ถือหุ้นหรือไม่?"
+          />
+        </mat-form-field>
+
+        <mat-form-field class="form-style">
+          <mat-label>เบอร์มือถือ(10 หลัก)</mat-label>
+          <input
+            matInput
+            maxlength="10"
+            formControlName="mobileNumber"
+            placeholder="0818887777"
+          />
+        </mat-form-field>
+      </form>
 
       <div class="accept-container">
-        <mat-checkbox [(ngModel)]="acceptCheckCardId" (ngModelChange)="checkCardId()" [disabled]="!cardId">
+        <mat-checkbox
+          [(ngModel)]="acceptPolicy"
+          (ngModelChange)="checkExitingData()"
+          [disabled]="firstFormGroup.invalid"
+          color="primary"
+        >
         </mat-checkbox>
-        <mat-label class="accept-text">ยินยอมให้ตรวจสอบข้อมูลของท่านจากกรมการปกครองกระทรวงมหาดไทย</mat-label>
-        <mat-label class="btn-more-detail">ดูเพิ่มเติม</mat-label>
+        <mat-label class="accept-text"
+          >ข้าพเจ้าได้อ่านและรับทราบข้อตกลง</mat-label
+        >
+        <mat-label class="btn-more-detail">เงื่อนไขการสมัครสมาชิก</mat-label>
       </div>
 
-      <div class="congrate-container" *ngIf="totalAmount">
-        <div class="congrate-text">
-          ยินดีด้วย...ท่านมีจำนวนคืนเงินประกันการใช้ไฟฟ้า
-        </div>
-        <div class="congrate-amount">
-          {{totalAmount}} <span class="amount-text">บาท</span>
-        </div>
+      <div class="btn-container">
+        <button mat-raised-button color="warn" [disabled]="!acceptPolicy" (click)="changeForm()">
+          ถัดไป
+        </button>
       </div>
-
-      <div class="btn-container" *ngIf="acceptCheckCardId === true">
-        <button mat-raised-button color="warn" *ngIf="!checkNoCardId" matStepperNext>ยืนยันการรับเงิน</button>
-        <button mat-raised-button color="warn" *ngIf="checkNoCardId" (click)="changeForm()">ตรวจสอบข้อมูล</button>
-      </div>
+      <div>{{ firstFormGroup.value | json}}</div>
     </div>
-
-    <div *ngIf="formCheckSecond">
-      <div fxLayout="row wrap">
-        <div fxFlex="100" class="cus-title">
-          ข้อมูลผู้ใช้สิทธิ
-        </div>
-      </div>
-
-      <mat-form-field class="form-style">
-        <mat-label>บัญชีแสดงสัญญา( 9 หลัก )</mat-label>
-        <input matInput maxlength="9" [(ngModel)]="secondFormData.ca_ref_no1" (keyup)="applyFilter($event)">
-      </mat-form-field>
-      <mat-form-field class="form-style">
-        <mat-label>รหัสเครื่องวัด( 8 หลัก )</mat-label>
-        <input matInput maxlength="8" [(ngModel)]="secondFormData.installation" (keyup)="applyFilter($event)">
-      </mat-form-field>
-
-      <div *ngIf="billData">
-        <div fxLayout="row wrap">
-          <div fxFlex="100" class="cus-title">
-            เลือกฉบับที่ขอคืนตามสิทธิ
-          </div>
-        </div>
-
-        <div fxLayout="row wrap" class="list-bill-contain" id="table" *ngFor="let item of billData.items">
-          <div fxFlex="6">
-            <mat-checkbox></mat-checkbox>
-          </div>
-          <div fxFlex="28">
-            {{item.refno}}
-          </div>
-          <div fxFlex="27">
-            {{item.refdate}}
-          </div>
-          <div fxFlex="30">
-            {{item.contactname}}
-          </div>
-          <div fxFlex="9">
-            {{item.amount | number}}
-          </div>
-        </div>
-      </div>
-
-      <div class="btn-container" *ngIf="billData">
-        <button mat-raised-button color="warn" matStepperNext>ยืนยันข้อมูล</button>
-      </div>
-    </div>
-
   </mat-step>
 
-  <mat-step>
-
-    <ng-template matStepLabel>ช่องทางการรับเงินคืนเงินประกัน</ng-template>
-
-    <div fxLayout="row wrap">
-      <div fxFlex="100" class="cus-title">
-        ช่องทางการรับเงินคืนเงินประกัน
-      </div>
-    </div>
-
-    <div class="check-container">
-      <div *ngFor="let item of waysData;let i = index">
-        <mat-checkbox [(ngModel)]="item.checked" (click)="selectWay(i, item)">{{item.name}}</mat-checkbox>
-      </div>
-
-      <mat-form-field *ngIf="waySelected.name === 'โอนเงินเข้าบัญชี'">
-        <mat-label>เลขที่บัญชีธนาคาร</mat-label>
-        <input matInput>
+  <mat-step [stepControl]="secondFormGroup">
+    <!-- <ng-template matStepLabel>ที่อยู่ปัจจุบัน</ng-template> -->
+    <form [formGroup]="secondFormGroup">
+      
+      <mat-form-field class="form-style">
+        <mat-label>รหัสไปรษณีย์</mat-label>
+        <input
+          matInput
+          maxlength="5"
+          formControlName="postCode"
+          placeholder="11001"
+        />
       </mat-form-field>
-    </div>
-
-    <div fxLayout="row wrap">
-      <div fxFlex="100" class="cus-title">
-        ช่องทางการรับเงินคืนเงินประกัน
-      </div>
-    </div>
-
-    <mat-form-field>
-      <mat-label>เบอร์โทรศัพย์</mat-label>
-      <input matInput>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>อีเมล</mat-label>
-      <input matInput>
-    </mat-form-field>
+      <mat-form-field class="form-style">
+        <mat-label>จังหวัด</mat-label>
+        <input
+          matInput
+          formControlName="provinceName"
+        />
+      </mat-form-field>
+      <mat-form-field class="form-style">
+        <mat-label>อำเภอ/เขต</mat-label>
+        <input
+          matInput
+          formControlName="districtName"
+        />
+      </mat-form-field>
+      <mat-form-field class="form-style">
+        <mat-label>ตำบล/แขวง</mat-label>
+        <input
+          matInput
+          formControlName="subDistrictName"
+        />
+      </mat-form-field>
+    </form>
 
     <div class="btn-container">
-      <button mat-raised-button color="warn" matStepperNext>ยืนยันการรับเงิน</button>
+      <button mat-raised-button color="warn" [disabled]="secondFormGroup.invalid" (click)="changeForm()">
+        ถัดไป
+      </button>
     </div>
-
+    <div>{{ secondFormGroup.value | json}}</div>
   </mat-step>
 
   <mat-step>
-    <ng-template matStepLabel>เสร็จสิ้น</ng-template>
+    <!-- <ng-template matStepLabel>เสร็จสิ้น</ng-template> -->
 
     <div fxLayout="row wrap">
       <div fxFlex="30%"></div>
       <div fxFlex="40%">
-        <img class="logo-full" src="../../assets/image/accept.png" alt="accept image">
+        <img
+          class="logo-full"
+          src="../../assets/image/accept.png"
+          alt="accept image"
+        />
       </div>
       <div fxFlex="30%"></div>
     </div>
@@ -166,6 +141,5 @@
         วันที่: 01/05/2020 เวลา 18:06 น.
       </div>
     </div>
-
   </mat-step>
 </mat-horizontal-stepper>

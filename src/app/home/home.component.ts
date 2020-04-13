@@ -1,129 +1,79 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { MatStepper } from "@angular/material/stepper";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+
+declare var liff: any;
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: "app-home",
+  templateUrl: "./home.component.html",
+  styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit {
+  @ViewChild("stepper") private myStepper: MatStepper;
 
-  acceptCheckCardId = false;
-  cardId: any;
+  userProfile: any;
 
-  billData: any;
-  totalAmount: Number;
-  checkNoCardId = false;
-  formCheckSecond = false;
+  isLinear = true;
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
 
-  secondFormData: any = {};
+  acceptPolicy = false;
+  myLiffId: string;
 
-  waysData: Array<any>;
-  waySelected: any = {};
-
-  constructor() { }
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
-    this.waysData = [
-      {
-        name: "บัญชีพร้อมเพย์",
-        checked: false
-      },
-      {
-        name: "โอนเงินเข้าบัญชี",
-        checked: false
-      }
-    ];
-  };
+    if (!this.myLiffId) {
+      this.initializeApp();
+    } else {
+      this.initializeLiff(this.myLiffId);
+    }
+  }
 
-  checkCardId() {
-    if (this.acceptCheckCardId === true) {
-      // this.cardId = this.cardId.padStart(13, '0');
-      const noData = true // for mockup no service
-      const res = noData ? undefined : {
-        data: {
-          items: [
-            {
-              "refno": "5303000001",
-              "refdate": "15/03/2553",
-              "contactname": "นายหลักประกัน การใช้ไฟฟ้า",
-              "contacttype": "waitapprove",
-              "amount": 2000
-            },
-            {
-              "refno": "5502001001",
-              "refdate": "14/02/2554",
-              "contactname": "นายการใช้ไฟฟ้า ฉบับใหม่",
-              "contacttype": "waitapprove",
-              "amount": 300
-            }
-          ]
-        }
-      };
+  initializeLiff(myLiffId) {
+    liff
+      .init({
+        liffId: myLiffId,
+      })
+      .then(() => {
+        // start to use LIFF's api
+        this.userProfile = liff.getProfile();
+        this.initializeApp();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
-      if (res) {
-        this.billData = res.data
-        // console.log(this.billData)
-        let total = 0
+  initializeApp() {
+    let MOBILE_PATTERN = /^[0-9]{10,10}$/;
+    let PERSONAL_CARDID_PATTERN = /^[0-9]{13,13}$/;
 
-        this.billData.items.forEach(el => {
-          total += el.amount;
-        });
+    this.firstFormGroup = this.formBuilder.group({
+      firstName: ["", [Validators.required]],
+      lastName: ["", [Validators.required]],
+      personalCardID: [
+        "",
+        [Validators.required, Validators.pattern(PERSONAL_CARDID_PATTERN)],
+      ],
+      mobileNumber: [
+        "",
+        [Validators.required, Validators.pattern(MOBILE_PATTERN)],
+      ],
+      lineUID: this.userProfile ? this.userProfile.userId : null,
+    });
+    this.secondFormGroup = this.formBuilder.group({
+      postCode: ["", Validators.required],
+      provinceName: ["", Validators.required],
+      districtName: ["", Validators.required],
+      subDistrictName: ["", Validators.required],
+    });
+  }
 
-        this.totalAmount = total
-      } else {
-        this.checkNoCardId = true
-      }
-    };
-  };
+  checkExitingData() {}
 
   changeForm() {
-    this.formCheckSecond = true
+    this.myStepper.next();
   }
-
-  applyFilter(event: any) {
-    // console.log(this.secondFormData)
-    if (this.secondFormData.ca_ref_no1.length === 9 && this.secondFormData.installation.length === 8) {
-      try {
-        const noData = false // for mockup no service
-        const res = noData ? undefined : {
-          data: {
-            items: [
-              {
-                "refno": "5303000001",
-                "refdate": "15/03/2553",
-                "contactname": "นายหลักประกัน การใช้ไฟฟ้า",
-                "contacttype": "waitapprove",
-                "amount": 2000
-              },
-              {
-                "refno": "5502001001",
-                "refdate": "14/02/2554",
-                "contactname": "นายการใช้ไฟฟ้า ฉบับใหม่",
-                "contacttype": "waitapprove",
-                "amount": 300
-              }
-            ]
-          }
-        };
-
-        if (res) {
-          this.billData = res.data
-        };
-      } catch (error) {
-        throw (error)
-      };
-    };
-  };
-
-  selectWay(idx, item) {
-    for (let i = 0; i < this.waysData.length; i++) {
-      const data = this.waysData[i];
-      data.checked = false
-    }
-    this.waysData[idx].checked === true;
-
-    this.waySelected = item
-    // console.log(this.waySelected)
-  }
-
 }
