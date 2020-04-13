@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   myLiffId: string;
 
   constructor(private formBuilder: FormBuilder) {
-    this.myLiffId = "1654060178-JWAlbg01";
+    this.myLiffId = "1654060178-kB8gYpra";
   }
 
   ngOnInit() {
@@ -34,18 +34,28 @@ export class HomeComponent implements OnInit {
   }
 
   initializeLiff(myLiffId) {
-    liff
-      .init({
-        liffId: myLiffId,
-      })
-      .then(() => {
-        // start to use LIFF's api
+    // liff
+    //   .init({
+    //     liffId: myLiffId,
+    //   })
+    //   .then(() => {
+    //     // start to use LIFF's api
+    //     this.userProfile = liff.getProfile();
+    //     this.initializeApp();
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    liff.init(
+      (data) => {
         this.userProfile = liff.getProfile();
         this.initializeApp();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      },
+      (err) => {
+        alert(JSON.stringify(err));
+        this.initializeApp();
+      }
+    );
   }
 
   initializeApp() {
