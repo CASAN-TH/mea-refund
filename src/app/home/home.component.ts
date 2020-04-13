@@ -38,12 +38,13 @@ export class HomeComponent implements OnInit {
     this.initializeApp();
     liff.init(
       async (data) => {
-        alert("liff init success...");
+        // alert("liff init success...");
         this.userProfile = await liff.getProfile();
-        alert(JSON.stringify(this.userProfile));
+        // alert(JSON.stringify(this.userProfile));
+        this.firstFormGroup.controls['lineUID'].setValue(this.userProfile.userId);
       },
       (err) => {
-        alert(JSON.stringify(err));
+        // alert(JSON.stringify(err));
       }
     );
     
