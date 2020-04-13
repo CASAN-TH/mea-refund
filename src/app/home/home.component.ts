@@ -21,7 +21,9 @@ export class HomeComponent implements OnInit {
   acceptPolicy = false;
   myLiffId: string;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) {
+    this.myLiffId = "1654060178-kB8gYpra";
+  }
 
   ngOnInit() {
     if (!this.myLiffId) {
