@@ -48,7 +48,9 @@ export class HomeComponent implements OnInit {
     //   });
     liff.init(
       (data) => {
+        alert("liff init success...");
         this.userProfile = liff.getProfile();
+        alert(JSON.stringify(this.userProfile));
         this.initializeApp();
       },
       (err) => {
