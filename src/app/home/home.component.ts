@@ -35,29 +35,32 @@ export class HomeComponent implements OnInit {
 
   initializeLiff(myLiffId) {
     // liff
-    //   .init({
-    //     liffId: myLiffId,
-    //   })
+    //   .init()
     //   .then(() => {
     //     // start to use LIFF's api
+    //     alert("liff init success...");
     //     this.userProfile = liff.getProfile();
-    //     this.initializeApp();
+    //     alert(JSON.stringify(this.userProfile));
+        
     //   })
     //   .catch((err) => {
-    //     console.log(err);
+    //     alert(JSON.stringify(err));
+        
     //   });
     liff.init(
-      (data) => {
+      async (data) => {
         alert("liff init success...");
-        this.userProfile = liff.getProfile();
+        this.userProfile = await liff.getProfile();
         alert(JSON.stringify(this.userProfile));
+        this.initializeApp();
       },
       (err) => {
         alert(JSON.stringify(err));
+        this.initializeApp();
       }
     );
-
-    this.initializeApp();
+    
+    
   }
 
   initializeApp() {
