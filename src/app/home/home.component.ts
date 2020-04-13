@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   myLiffId: string;
 
   constructor(private formBuilder: FormBuilder) {
-    this.myLiffId = "1654060178-kB8gYpra";
+    this.myLiffId = "1654060178-JWAlbg01";
   }
 
   ngOnInit() {
