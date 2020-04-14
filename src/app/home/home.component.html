@@ -9,17 +9,17 @@
         </div>
       </div>
       <form name="firstFormGroup" [formGroup]="firstFormGroup" novalidate>
-        <mat-form-field class="form-style">
+        <mat-form-field appearance="outline" >
           <mat-label>ชื่อ</mat-label>
           <input matInput formControlName="firstName" placeholder="ชูใจ" />
         </mat-form-field>
 
-        <mat-form-field class="form-style">
+        <mat-form-field appearance="outline" >
           <mat-label>นามสกุล</mat-label>
           <input matInput formControlName="lastName" placeholder="รักษ์ดี" />
         </mat-form-field>
 
-        <mat-form-field class="form-style">
+        <mat-form-field appearance="outline" >
           <mat-label>เลขที่ประจำตัวประชาชน( 13 หลัก )</mat-label>
           <input
             matInput
@@ -29,7 +29,7 @@
           />
         </mat-form-field>
 
-        <mat-form-field class="form-style">
+        <mat-form-field appearance="outline" >
           <mat-label>เบอร์มือถือ(10 หลัก)</mat-label>
           <input
             matInput
@@ -70,7 +70,7 @@
   <mat-step [stepControl]="secondFormGroup">
     <!-- <ng-template matStepLabel>ที่อยู่ปัจจุบัน</ng-template> -->
     <form [formGroup]="secondFormGroup">
-      <mat-form-field class="form-style">
+      <mat-form-field appearance="outline" >
         <mat-label>รหัสไปรษณีย์</mat-label>
         <input
           matInput
@@ -79,15 +79,15 @@
           placeholder="11001"
         />
       </mat-form-field>
-      <mat-form-field class="form-style">
+      <mat-form-field appearance="outline" >
         <mat-label>จังหวัด</mat-label>
         <input matInput formControlName="provinceName" />
       </mat-form-field>
-      <mat-form-field class="form-style">
+      <mat-form-field appearance="outline" >
         <mat-label>อำเภอ/เขต</mat-label>
         <input matInput formControlName="districtName" />
       </mat-form-field>
-      <mat-form-field class="form-style">
+      <mat-form-field appearance="outline" >
         <mat-label>ตำบล/แขวง</mat-label>
         <input matInput formControlName="subDistrictName" />
       </mat-form-field>
