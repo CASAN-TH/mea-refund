@@ -99,6 +99,7 @@ export class HomeComponent implements OnInit {
     if (res.data) {
       this.isExiting = true;
       this._id = res.data._id;
+      this.acceptPolicy = true;
 
       if (res.data.personalInfo.firstNameThai)
         this.firstFormGroup.controls["firstNameThai"].setValue(
@@ -115,13 +116,11 @@ export class HomeComponent implements OnInit {
           res.data.personalInfo.citizenId
         );
 
-        res.data.directContact.forEach(element => {
-          if(element.method === "mobile"){
-            this.firstFormGroup.controls["mobileNumber"].setValue(
-              element.value
-            );
-          }
-        });
+      res.data.directContact.forEach((element) => {
+        if (element.method === "mobile") {
+          this.firstFormGroup.controls["mobileNumber"].setValue(element.value);
+        }
+      });
 
       this.secondFormGroup.controls["addressPostalCode"].setValue(
         res.data.contactAddress.addressPostalCode
@@ -178,7 +177,7 @@ export class HomeComponent implements OnInit {
             value: this.firstFormGroup.get("lineUID").value,
           },
         ],
-        contactAddress: this.secondFormGroup.value
+        contactAddress: this.secondFormGroup.value,
         // contactAddress: {
         //   addressLine1: "บ้านเลขที่ 78/1",
         //   addressStreet: "วงแหวนลำลูกกา",
@@ -208,7 +207,7 @@ export class HomeComponent implements OnInit {
             value: this.firstFormGroup.get("lineUID").value,
           },
         ],
-        contactAddress: this.secondFormGroup.value
+        contactAddress: this.secondFormGroup.value,
       };
       await this.iplService.saveIPL(body);
       this.myStepper.next();
