@@ -88,8 +88,14 @@ export class HomeComponent implements OnInit {
     this.myStepper.next();
   }
 
-  closeWindows() {
+  async closeWindows() {
     try {
+      const successMsgs = await liff.sendMessages([
+        {
+          type: 'text',
+          text: 'ยืนยันการลงทะเบียน'
+        }
+      ])
       liff.closeWindow();
     } catch (error) {
       
