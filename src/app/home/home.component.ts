@@ -115,6 +115,14 @@ export class HomeComponent implements OnInit {
           res.data.personalInfo.citizenId
         );
 
+        res.data.directContact.forEach(element => {
+          if(element.method === "mobile"){
+            this.firstFormGroup.controls["mobileNumber"].setValue(
+              element.value
+            );
+          }
+        });
+
       this.secondFormGroup.controls["addressPostalCode"].setValue(
         res.data.contactAddress.addressPostalCode
       );
@@ -166,7 +174,7 @@ export class HomeComponent implements OnInit {
             value: this.firstFormGroup.get("mobileNumber").value,
           },
           {
-            method: "lineUID",
+            method: "lineUserId",
             value: this.firstFormGroup.get("lineUID").value,
           },
         ],
@@ -196,7 +204,7 @@ export class HomeComponent implements OnInit {
             value: this.firstFormGroup.get("mobileNumber").value,
           },
           {
-            method: "lineUID",
+            method: "lineUserId",
             value: this.firstFormGroup.get("lineUID").value,
           },
         ],
