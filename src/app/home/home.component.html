@@ -11,20 +11,12 @@
       <form name="firstFormGroup" [formGroup]="firstFormGroup" novalidate>
         <mat-form-field class="form-style">
           <mat-label>ชื่อ</mat-label>
-          <input
-            matInput
-            formControlName="firstName"
-            placeholder="ชูใจ"
-          />
+          <input matInput formControlName="firstName" placeholder="ชูใจ" />
         </mat-form-field>
 
         <mat-form-field class="form-style">
           <mat-label>นามสกุล</mat-label>
-          <input
-            matInput
-            formControlName="lastName"
-            placeholder="รักษ์ดี"
-          />
+          <input matInput formControlName="lastName" placeholder="รักษ์ดี" />
         </mat-form-field>
 
         <mat-form-field class="form-style">
@@ -51,7 +43,6 @@
       <div class="accept-container">
         <mat-checkbox
           [(ngModel)]="acceptPolicy"
-          (ngModelChange)="checkExitingData()"
           [disabled]="firstFormGroup.invalid"
           color="primary"
         >
@@ -63,18 +54,22 @@
       </div>
 
       <div class="btn-container">
-        <button mat-raised-button color="warn" [disabled]="!acceptPolicy" (click)="changeForm()">
+        <button
+          mat-raised-button
+          color="warn"
+          [disabled]="!acceptPolicy"
+          (click)="getExistingDataByName()"
+        >
           ถัดไป
         </button>
       </div>
-      <div>{{ firstFormGroup.value | json}}</div>
+      <div>{{ firstFormGroup.value | json }}</div>
     </div>
   </mat-step>
 
   <mat-step [stepControl]="secondFormGroup">
     <!-- <ng-template matStepLabel>ที่อยู่ปัจจุบัน</ng-template> -->
     <form [formGroup]="secondFormGroup">
-      
       <mat-form-field class="form-style">
         <mat-label>รหัสไปรษณีย์</mat-label>
         <input
@@ -86,60 +81,57 @@
       </mat-form-field>
       <mat-form-field class="form-style">
         <mat-label>จังหวัด</mat-label>
-        <input
-          matInput
-          formControlName="provinceName"
-        />
+        <input matInput formControlName="provinceName" />
       </mat-form-field>
       <mat-form-field class="form-style">
         <mat-label>อำเภอ/เขต</mat-label>
-        <input
-          matInput
-          formControlName="districtName"
-        />
+        <input matInput formControlName="districtName" />
       </mat-form-field>
       <mat-form-field class="form-style">
         <mat-label>ตำบล/แขวง</mat-label>
-        <input
-          matInput
-          formControlName="subDistrictName"
-        />
+        <input matInput formControlName="subDistrictName" />
       </mat-form-field>
     </form>
 
     <div class="btn-container">
-      <button mat-raised-button color="warn" [disabled]="secondFormGroup.invalid" (click)="changeForm()">
+      <button
+        mat-raised-button
+        color="warn"
+        [disabled]="secondFormGroup.invalid"
+        (click)="getExistingDataByName()"
+      >
         ถัดไป
       </button>
     </div>
-    <div>{{ secondFormGroup.value | json}}</div>
+    <div>{{ secondFormGroup.value | json }}</div>
   </mat-step>
 
   <mat-step>
     <!-- <ng-template matStepLabel>เสร็จสิ้น</ng-template> -->
 
-    <div fxLayout="row wrap">
-      <div fxFlex="30%"></div>
-      <div fxFlex="40%">
-        <img
-          class="logo-full"
-          src="../../assets/image/accept.png"
-          alt="accept image"
-        />
-      </div>
-      <div fxFlex="30%"></div>
+    <div fxFlex fxLayoutAlign="center center">
+      <img
+        class="logo-full"
+        src="../../assets/image/accept.png"
+        alt="accept image"
+      />
     </div>
 
     <div class="done-text-center">
       <div>
-        ระบบได้ทำการ xxxxxx
+        ระบบได้ทำการรับลงทะเบียนของท่านแล้ว
       </div>
-      <div>
-        เลขที่อ้างอิง xxxxxxxxxxxxxxxxxxxxxxxx
-      </div>
-      <div>
-        วันที่: 01/05/2020 เวลา 18:06 น.
-      </div>
+    </div>
+
+    <div class="btn-container">
+      <button
+        mat-raised-button
+        color="warn"
+        [disabled]="secondFormGroup.invalid"
+        (click)="closeWindows()"
+      >
+        ปิดหน้าต่างนี้
+      </button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>

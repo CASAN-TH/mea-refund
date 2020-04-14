@@ -38,9 +38,12 @@ export class HomeComponent implements OnInit {
     this.initializeApp();
     liff.init(
       async (data) => {
-        // alert("liff init success...");
         this.userProfile = await liff.getProfile();
-        // alert(JSON.stringify(this.userProfile));
+        // get user information data
+        // if existing then set form user information data (firstFormGroup, secondFormGroup)
+        // this.getExistingDataByLineUserId(this.userProfile.userId)
+
+        // if not existing then set form blank
         this.firstFormGroup.controls['lineUID'].setValue(this.userProfile.userId);
       },
       (err) => {
@@ -54,6 +57,7 @@ export class HomeComponent implements OnInit {
   initializeApp() {
     let MOBILE_PATTERN = /^[0-9]{10,10}$/;
     let PERSONAL_CARDID_PATTERN = /^[0-9]{13,13}$/;
+    let POSTCODE_PATTERN = /^[0-9]{5,5}$/;
 
     this.firstFormGroup = this.formBuilder.group({
       firstName: ["", [Validators.required]],
@@ -69,16 +73,28 @@ export class HomeComponent implements OnInit {
       lineUID: this.userProfile ? this.userProfile.userId : null,
     });
     this.secondFormGroup = this.formBuilder.group({
-      postCode: ["", Validators.required],
+      postCode: ["", [Validators.required, , Validators.pattern(POSTCODE_PATTERN)]],
       provinceName: ["", Validators.required],
       districtName: ["", Validators.required],
       subDistrictName: ["", Validators.required],
     });
   }
 
-  checkExitingData() {}
-
-  changeForm() {
+  getExistingDataByName() {
     this.myStepper.next();
   }
+
+  save() {
+    this.myStepper.next();
+  }
+
+  closeWindows() {
+    try {
+      liff.closeWindow();
+    } catch (error) {
+      
+    }
+    
+  }
+  
 }
