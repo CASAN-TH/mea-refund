@@ -16,6 +16,9 @@ export class HomeComponent implements OnInit {
   userProfile: any;
   isExiting: boolean = false;
 
+  postcodesList: any = [];
+  temp: any = [];
+
   isLinear = true;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -31,12 +34,15 @@ export class HomeComponent implements OnInit {
     this.myLiffId = "1654060178-kB8gYpra";
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     if (!this.myLiffId) {
       this.initializeApp();
     } else {
       this.initializeLiff(this.myLiffId);
     }
+    let postCodeList: any = await this.iplService.getPostcodesList();
+    this.temp = postCodeList.data;
+    this.postcodesList = postCodeList.data;
   }
 
   initializeLiff(myLiffId) {
@@ -224,5 +230,41 @@ export class HomeComponent implements OnInit {
       ]);
       liff.closeWindow();
     } catch (error) {}
+  }
+
+  updateFilter(event) {
+    //change search keyword to lower case
+    const val = event.target.value.toLowerCase();
+
+    // filter our data
+    const temp = this.temp.filter(function (d) {
+      return d.postcode.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+
+    // update the rows
+    this.postcodesList = temp;
+    console.log(this.postcodesList);
+  }
+
+  getPosts(val){
+    
+    //12150 | บึงคำพร้อย | อำเภอลำลูกกา | ปทุมธานี
+    let viewValue = val.viewValue;
+    let arrValue = val.viewValue.split("|");
+    let subdistrict = arrValue[1].trim();
+    let district = arrValue[2].trim();
+    let province = arrValue[3].trim();
+
+    
+    this.secondFormGroup.controls["addressProvince"].setValue(
+      province
+    );
+    this.secondFormGroup.controls["addressDistrict"].setValue(
+      district
+    );
+    this.secondFormGroup.controls["addressSubDistrict"].setValue(
+      subdistrict
+    );
+
   }
 }

@@ -15,6 +15,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -48,6 +49,7 @@ const appRoutes: Routes = [
     MatCheckboxModule,
     FormsModule,
     MatListModule,
+    MatAutocompleteModule,
     MatButtonModule,
     HttpClientModule,
     RouterModule.forRoot(

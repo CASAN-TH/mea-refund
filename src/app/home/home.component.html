@@ -77,7 +77,17 @@
           maxlength="5"
           formControlName="addressPostalCode"
           placeholder="11001"
+          [matAutocomplete]="auto"
+          (keyup)="updateFilter($event)"
         />
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)='getPosts($event.option)'>
+          <mat-option *ngFor="let postcode of postcodesList.slice(0,10)" [value]="postcode.postcode">
+            <span>{{postcode.postcode}}</span> |
+            <small>{{postcode.subdistrict}}</small> |
+            <small>{{postcode.district}}</small> |
+            <small>{{postcode.province}}</small>
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
       <mat-form-field appearance="outline" >
         <mat-label>จังหวัด</mat-label>
