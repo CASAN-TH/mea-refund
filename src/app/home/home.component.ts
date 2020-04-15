@@ -105,7 +105,8 @@ export class HomeComponent implements OnInit {
     if (res.data) {
       this.isExiting = true;
       this._id = res.data._id;
-      this.acceptPolicy = true;
+      //this.acceptPolicy = true;
+
 
       if (res.data.personalInfo.firstNameThai)
         this.firstFormGroup.controls["firstNameThai"].setValue(

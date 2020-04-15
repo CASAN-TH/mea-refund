@@ -40,17 +40,20 @@
         </mat-form-field>
       </form>
 
-      <div class="accept-container" *ngIf="!isExiting">
+      <div class="accept-container" >
         <mat-checkbox
           [(ngModel)]="acceptPolicy"
           [disabled]="firstFormGroup.invalid"
           color="primary"
         >
         </mat-checkbox>
-        <mat-label class="accept-text"
+        <mat-label class="accept-text" *ngIf="!isExiting"
           >ข้าพเจ้าได้อ่านและรับทราบข้อตกลง</mat-label
         >
-        <mat-label class="btn-more-detail">เงื่อนไขการสมัครสมาชิก</mat-label>
+        <mat-label class="accept-text" *ngIf="isExiting"
+          >ข้าพเจ้าคือเจ้าของข้อมูลข้างต้นนี้</mat-label
+        >
+        <mat-label class="btn-more-detail" *ngIf="!isExiting">เงื่อนไขการสมัครสมาชิก</mat-label>
       </div>
 
       <div class="btn-container">
