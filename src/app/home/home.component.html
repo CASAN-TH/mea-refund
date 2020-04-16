@@ -78,6 +78,14 @@
     </div>
     <form [formGroup]="secondFormGroup">
       <mat-form-field appearance="outline">
+        <mat-label>ที่อยู่ปัจจุบัน</mat-label>
+        <input matInput formControlName="addressLine1" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>ถนน</mat-label>
+        <input matInput formControlName="addressStreet" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>รหัสไปรษณีย์</mat-label>
         <input
           matInput
@@ -114,14 +122,8 @@
         <mat-label>ตำบล/แขวง</mat-label>
         <input matInput formControlName="addressSubDistrict" />
       </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>ถนน</mat-label>
-        <input matInput formControlName="addressStreet" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>ที่อยู่ปัจจุบัน</mat-label>
-        <input matInput formControlName="addressLine1" />
-      </mat-form-field>
+      
+      
     </form>
 
     <div class="btn-container">
