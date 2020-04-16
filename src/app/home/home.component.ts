@@ -98,6 +98,8 @@ export class HomeComponent implements OnInit {
       addressSubDistrict: ["", Validators.required],
       addressStreet: ["", Validators.required],
       addressLine1: ["", Validators.required],
+      latitude: [""],
+      longitude: [""]
     });
   }
 
@@ -147,6 +149,12 @@ export class HomeComponent implements OnInit {
       this.secondFormGroup.controls["addressLine1"].setValue(
         res.data.contactAddress.addressLine1
       );
+      this.secondFormGroup.controls["latitude"].setValue(
+        res.data.contactAddress.latitude
+      );
+      this.secondFormGroup.controls["longitude"].setValue(
+        res.data.contactAddress.longitude
+      )
     }
   }
 
@@ -158,7 +166,6 @@ export class HomeComponent implements OnInit {
         mobileNumber: this.firstFormGroup.get("mobileNumber").value,
       });
       this.bindingData(res);
-      console.log("ssss");
       this.myStepper.next();
     } else {
       this.myStepper.next();
@@ -185,15 +192,6 @@ export class HomeComponent implements OnInit {
           },
         ],
         contactAddress: this.secondFormGroup.value,
-        // contactAddress: {
-        //   addressLine1: "บ้านเลขที่ 78/1",
-        //   addressStreet: "วงแหวนลำลูกกา",
-        //   addressSubDistrict: "บึงคำพร้อย",
-        //   addressDistrict: "ลำลูกกา",
-        //   addressProvince: "ปทุมธานี",
-        //   addressCountry: "ไทย",
-        //   addressPostalCode: "12130"
-        // }
       };
       await this.iplService.updateIPL(body);
       this.myStepper.next();
