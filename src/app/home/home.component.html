@@ -49,7 +49,7 @@
         >ข้าพเจ้าได้อ่านและรับทราบข้อตกลง</mat-label
       >
       <mat-label class="accept-text" *ngIf="isExiting"
-        >ข้าพเจ้าคือเจ้าของข้อมูลข้างต้นนี้</mat-label
+        >ข้อมูลถูกต้องแล้ว</mat-label
       >
       <mat-label class="btn-more-detail" *ngIf="!isExiting"
         >เงื่อนไขการสมัครสมาชิก</mat-label
@@ -73,12 +73,12 @@
     <!-- <ng-template matStepLabel>ที่อยู่ปัจจุบัน</ng-template> -->
     <div fxLayout="row wrap">
       <div fxFlex="100" fxLayoutAlign="start center">
-        ที่อยู่ปัจจุบัน
+        ที่อยู่นัดหมาย
       </div>
     </div>
     <form [formGroup]="secondFormGroup">
       <mat-form-field appearance="outline">
-        <mat-label>ที่อยู่ปัจจุบัน</mat-label>
+        <mat-label>บ้านเลขที่/หมู่บ้าน</mat-label>
         <input matInput formControlName="addressLine1" />
       </mat-form-field>
       <mat-form-field appearance="outline">
