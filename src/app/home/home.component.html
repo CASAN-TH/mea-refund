@@ -1,79 +1,83 @@
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <!-- <ng-template matStepLabel>ข้อมูลสมาชิก</ng-template> -->
-
-    <div>
-      <div fxLayout="row wrap">
-        <div fxFlex="100" fxLayoutAlign="start center">
-          ข้อมูลสมาชิก
-        </div>
+    <div fxLayout="row wrap">
+      <div fxFlex="100" fxLayoutAlign="start center">
+        ข้อมูลสมาชิก
       </div>
-      <form name="firstFormGroup" [formGroup]="firstFormGroup" novalidate>
-        <mat-form-field appearance="outline" >
-          <mat-label>ชื่อ</mat-label>
-          <input matInput formControlName="firstNameThai" placeholder="ชูใจ" />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" >
-          <mat-label>นามสกุล</mat-label>
-          <input matInput formControlName="lastNameThai" placeholder="รักษ์ดี" />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" >
-          <mat-label>เลขที่ประจำตัวประชาชน( 13 หลัก )</mat-label>
-          <input
-            matInput
-            maxlength="13"
-            formControlName="citizenId"
-            placeholder="ใช้เพื่อตรวจสอบว่าเป็นผู้ถือหุ้นหรือไม่?"
-          />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" >
-          <mat-label>เบอร์มือถือ(10 หลัก)</mat-label>
-          <input
-            matInput
-            maxlength="10"
-            formControlName="mobileNumber"
-            placeholder="0818887777"
-          />
-        </mat-form-field>
-      </form>
-
-      <div class="accept-container" >
-        <mat-checkbox
-          [(ngModel)]="acceptPolicy"
-          [disabled]="firstFormGroup.invalid"
-          color="primary"
-        >
-        </mat-checkbox>
-        <mat-label class="accept-text" *ngIf="!isExiting"
-          >ข้าพเจ้าได้อ่านและรับทราบข้อตกลง</mat-label
-        >
-        <mat-label class="accept-text" *ngIf="isExiting"
-          >ข้าพเจ้าคือเจ้าของข้อมูลข้างต้นนี้</mat-label
-        >
-        <mat-label class="btn-more-detail" *ngIf="!isExiting">เงื่อนไขการสมัครสมาชิก</mat-label>
-      </div>
-
-      <div class="btn-container">
-        <button
-          mat-raised-button
-          color="warn"
-          [disabled]="!acceptPolicy"
-          (click)="getExistingDataByName()"
-        >
-          ถัดไป
-        </button>
-      </div>
-      <!-- <div>{{ firstFormGroup.value | json }}</div> -->
     </div>
+    <form name="firstFormGroup" [formGroup]="firstFormGroup" novalidate>
+      <mat-form-field appearance="outline">
+        <mat-label>ชื่อ</mat-label>
+        <input matInput formControlName="firstNameThai" placeholder="ชูใจ" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>นามสกุล</mat-label>
+        <input matInput formControlName="lastNameThai" placeholder="รักษ์ดี" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>เลขที่ประจำตัวประชาชน( 13 หลัก )</mat-label>
+        <input
+          matInput
+          maxlength="13"
+          formControlName="citizenId"
+          placeholder="ใช้เพื่อตรวจสอบว่าเป็นผู้ถือหุ้นหรือไม่?"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>เบอร์มือถือ(10 หลัก)</mat-label>
+        <input
+          matInput
+          maxlength="10"
+          formControlName="mobileNumber"
+          placeholder="0818887777"
+        />
+      </mat-form-field>
+    </form>
+
+    <div class="accept-container">
+      <mat-checkbox
+        [(ngModel)]="acceptPolicy"
+        [disabled]="firstFormGroup.invalid"
+        color="primary"
+      >
+      </mat-checkbox>
+      <mat-label class="accept-text" *ngIf="!isExiting"
+        >ข้าพเจ้าได้อ่านและรับทราบข้อตกลง</mat-label
+      >
+      <mat-label class="accept-text" *ngIf="isExiting"
+        >ข้าพเจ้าคือเจ้าของข้อมูลข้างต้นนี้</mat-label
+      >
+      <mat-label class="btn-more-detail" *ngIf="!isExiting"
+        >เงื่อนไขการสมัครสมาชิก</mat-label
+      >
+    </div>
+
+    <div class="btn-container">
+      <button
+        mat-raised-button
+        color="warn"
+        [disabled]="!acceptPolicy"
+        (click)="getExistingDataByName()"
+      >
+        ถัดไป
+      </button>
+    </div>
+    <!-- <div>{{ firstFormGroup.value | json }}</div> -->
   </mat-step>
 
   <mat-step [stepControl]="secondFormGroup">
     <!-- <ng-template matStepLabel>ที่อยู่ปัจจุบัน</ng-template> -->
+    <div fxLayout="row wrap">
+      <div fxFlex="100" fxLayoutAlign="start center">
+        ที่อยู่ปัจจุบัน
+      </div>
+    </div>
     <form [formGroup]="secondFormGroup">
-      <mat-form-field appearance="outline" >
+      <mat-form-field appearance="outline">
         <mat-label>รหัสไปรษณีย์</mat-label>
         <input
           matInput
@@ -83,32 +87,38 @@
           [matAutocomplete]="auto"
           (keyup)="updateFilter($event)"
         />
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)='getPosts($event.option)'>
-          <mat-option *ngFor="let postcode of postcodesList.slice(0,10)" [value]="postcode.postcode">
-            <span>{{postcode.postcode}}</span> |
-            <small>{{postcode.subdistrict}}</small> |
-            <small>{{postcode.district}}</small> |
-            <small>{{postcode.province}}</small>
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          (optionSelected)="getPosts($event.option)"
+        >
+          <mat-option
+            *ngFor="let postcode of postcodesList.slice(0, 10)"
+            [value]="postcode.postcode"
+          >
+            <span>{{ postcode.postcode }}</span> |
+            <small>{{ postcode.subdistrict }}</small> |
+            <small>{{ postcode.district }}</small> |
+            <small>{{ postcode.province }}</small>
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-      <mat-form-field appearance="outline" >
+      <mat-form-field appearance="outline">
         <mat-label>จังหวัด</mat-label>
         <input matInput formControlName="addressProvince" />
       </mat-form-field>
-      <mat-form-field appearance="outline" >
+      <mat-form-field appearance="outline">
         <mat-label>อำเภอ/เขต</mat-label>
         <input matInput formControlName="addressDistrict" />
       </mat-form-field>
-      <mat-form-field appearance="outline" >
+      <mat-form-field appearance="outline">
         <mat-label>ตำบล/แขวง</mat-label>
         <input matInput formControlName="addressSubDistrict" />
       </mat-form-field>
-      <mat-form-field appearance="outline" >
+      <mat-form-field appearance="outline">
         <mat-label>ถนน</mat-label>
         <input matInput formControlName="addressStreet" />
       </mat-form-field>
-      <mat-form-field appearance="outline" >
+      <mat-form-field appearance="outline">
         <mat-label>ที่อยู่ปัจจุบัน</mat-label>
         <input matInput formControlName="addressLine1" />
       </mat-form-field>
@@ -121,38 +131,9 @@
         [disabled]="secondFormGroup.invalid"
         (click)="save()"
       >
-        ถัดไป
-      </button>
-    </div>
-    <!-- <div>{{ secondFormGroup.value | json }}</div> -->
-  </mat-step>
-
-  <mat-step>
-    <!-- <ng-template matStepLabel>เสร็จสิ้น</ng-template> -->
-
-    <!-- <div fxFlex fxLayoutAlign="center center">
-      <img
-        class="logo-full"
-        src="../../assets/image/accept.png"
-        alt="accept image"
-      />
-    </div>
-
-    <div class="done-text-center">
-      <div>
-        ระบบได้ทำการรับลงทะเบียนของท่านแล้ว
-      </div>
-    </div> -->
-
-    <div class="btn-container">
-      <button
-        mat-raised-button
-        color="warn"
-        [disabled]="secondFormGroup.invalid"
-        (click)="closeWindows()"
-      >
         ยืนยันข้อมูล
       </button>
     </div>
+    <!-- <div>{{ secondFormGroup.value | json }}</div> -->
   </mat-step>
 </mat-horizontal-stepper>

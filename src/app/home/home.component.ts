@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { MatStepper } from "@angular/material/stepper";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { IplService } from "./ipl.service";
@@ -47,6 +47,7 @@ export class HomeComponent implements OnInit {
 
   initializeLiff(myLiffId) {
     this.initializeApp();
+    
     liff.init(
       async (data) => {
         this.userProfile = await liff.getProfile();
@@ -101,6 +102,7 @@ export class HomeComponent implements OnInit {
       latitude: [""],
       longitude: [""]
     });
+
   }
 
   bindingData(res: any) {
