@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { MatStepper } from "@angular/material/stepper";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { IplService } from "./ipl.service";
+import { ValidatePID } from "./pid.validate";
 
 
 declare var liff: any;
@@ -80,6 +81,8 @@ export class HomeComponent implements OnInit {
     );
   }
 
+
+
   initializeApp() {
     let MOBILE_PATTERN = /^[0-9]{10,10}$/;
     let PERSONAL_CARDID_PATTERN = /^[0-9]{13,13}$/;
@@ -90,7 +93,7 @@ export class HomeComponent implements OnInit {
       lastNameThai: ["", [Validators.required]],
       citizenId: [
         "",
-        [Validators.required, Validators.pattern(PERSONAL_CARDID_PATTERN)],
+        [Validators.required, Validators.pattern(PERSONAL_CARDID_PATTERN), ValidatePID],
       ],
       mobileNumber: [
         "",
