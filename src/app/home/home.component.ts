@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
 
   initializeLiff(myLiffId) {
     this.initializeApp();
-    
+
     liff.init(
       async (data) => {
         this.userProfile = await liff.getProfile();
@@ -100,9 +100,8 @@ export class HomeComponent implements OnInit {
       addressStreet: ["", Validators.required],
       addressLine1: ["", Validators.required],
       latitude: [""],
-      longitude: [""]
+      longitude: [""],
     });
-
   }
 
   bindingData(res: any) {
@@ -110,7 +109,6 @@ export class HomeComponent implements OnInit {
       this.isExiting = true;
       this._id = res.data._id;
       //this.acceptPolicy = true;
-
 
       if (res.data.personalInfo.firstNameThai)
         this.firstFormGroup.controls["firstNameThai"].setValue(
@@ -156,7 +154,7 @@ export class HomeComponent implements OnInit {
       );
       this.secondFormGroup.controls["longitude"].setValue(
         res.data.contactAddress.longitude
-      )
+      );
     }
   }
 
@@ -196,7 +194,8 @@ export class HomeComponent implements OnInit {
         contactAddress: this.secondFormGroup.value,
       };
       await this.iplService.updateIPL(body);
-      this.myStepper.next();
+      // this.myStepper.next();
+      this.closeWindows();
     } else {
       let body = {
         personalInfo: {
@@ -218,7 +217,7 @@ export class HomeComponent implements OnInit {
       };
       await this.iplService.saveIPL(body);
       // this.myStepper.next();
-      this.closeWindows();
+     this.closeWindows();
     }
   }
 
@@ -248,8 +247,7 @@ export class HomeComponent implements OnInit {
     console.log(this.postcodesList);
   }
 
-  getPosts(val){
-    
+  getPosts(val) {
     //12150 | บึงคำพร้อย | อำเภอลำลูกกา | ปทุมธานี
     let viewValue = val.viewValue;
     let arrValue = val.viewValue.split("|");
@@ -257,16 +255,8 @@ export class HomeComponent implements OnInit {
     let district = arrValue[2].trim();
     let province = arrValue[3].trim();
 
-    
-    this.secondFormGroup.controls["addressProvince"].setValue(
-      province
-    );
-    this.secondFormGroup.controls["addressDistrict"].setValue(
-      district
-    );
-    this.secondFormGroup.controls["addressSubDistrict"].setValue(
-      subdistrict
-    );
-
+    this.secondFormGroup.controls["addressProvince"].setValue(province);
+    this.secondFormGroup.controls["addressDistrict"].setValue(district);
+    this.secondFormGroup.controls["addressSubDistrict"].setValue(subdistrict);
   }
 }
