@@ -10,3 +10,4 @@ steps:
     args: ['beta', 'run', 'deploy', 'tvds-liffapp', '--image', 'gcr.io/$PROJECT_ID/tvds-liffapp', '--region', 'asia-east1','--platform', 'managed', '--quiet']
   images:
   - gcr.io/$PROJECT_ID/tvds-liffapp
+  
