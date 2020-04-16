@@ -5,8 +5,5 @@ steps:
     # push the container image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/tvds-liffapp']
-    # Deploy container image to Cloud Run
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['run', 'deploy', 'tvds-liffapp', '--image', 'gcr.io/$PROJECT_ID/tvds-liffapp', '--region', 'asia-east1','--platform', 'managed', '--quiet']
   images:
   - gcr.io/$PROJECT_ID/tvds-liffapp
