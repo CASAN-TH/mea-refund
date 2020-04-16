@@ -9,7 +9,7 @@
     <form name="firstFormGroup" [formGroup]="firstFormGroup" novalidate>
       <mat-form-field appearance="outline">
         <mat-label>ชื่อ</mat-label>
-        <input matInput formControlName="firstNameThai" placeholder="ชูใจ" />
+        <input matInput #firstNameThai formControlName="firstNameThai" placeholder="ชูใจ" />
       </mat-form-field>
 
       <mat-form-field appearance="outline">

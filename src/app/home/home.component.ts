@@ -3,6 +3,7 @@ import { MatStepper } from "@angular/material/stepper";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { IplService } from "./ipl.service";
 
+
 declare var liff: any;
 
 @Component({
@@ -12,6 +13,7 @@ declare var liff: any;
 })
 export class HomeComponent implements OnInit {
   @ViewChild("stepper") private myStepper: MatStepper;
+  @ViewChild('firstNameThai') nameInput: ElementRef;
 
   userProfile: any;
   isExiting: boolean = false;
@@ -35,6 +37,7 @@ export class HomeComponent implements OnInit {
   }
 
   async ngOnInit() {
+    console.log("ngOnInit")
     if (!this.myLiffId) {
       this.initializeApp();
     } else {
@@ -43,6 +46,11 @@ export class HomeComponent implements OnInit {
     let postCodeList: any = await this.iplService.getPostcodesList();
     this.temp = postCodeList.data;
     this.postcodesList = postCodeList.data;
+  }
+
+  ngAfterViewInit() {
+    console.log("ngAfterViewInit")
+    
   }
 
   initializeLiff(myLiffId) {
@@ -60,6 +68,7 @@ export class HomeComponent implements OnInit {
         console.log(res);
 
         this.bindingData(res);
+        this.nameInput.nativeElement.focus();
         // if not existing then set form blank
         this.firstFormGroup.controls["lineUID"].setValue(
           this.userProfile.userId
