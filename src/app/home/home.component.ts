@@ -217,7 +217,8 @@ export class HomeComponent implements OnInit {
         contactAddress: this.secondFormGroup.value,
       };
       await this.iplService.saveIPL(body);
-      this.myStepper.next();
+      // this.myStepper.next();
+      this.closeWindows();
     }
   }
 
