@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl : 'https://casan-sevice.lamunphan.com'
+  apiUrl : 'https://tvds-service-7lgq2xsobq-de.a.run.app'
 };
 
 /*
