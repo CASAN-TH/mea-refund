@@ -47,7 +47,6 @@ export class HomeComponent implements OnInit {
     // }
     // alert(JSON.stringify(this.route.snapshot.data.items));
     let res = this.route.snapshot.data.items;
-    this.isExiting = res ? true : false;
     this.initializeApp(res || "");
     let postCodeList: any = await this.iplService.getPostcodesList();
     this.temp = postCodeList.data;
@@ -92,6 +91,8 @@ export class HomeComponent implements OnInit {
     let mobileno = "";
 
     if (res.data) {
+      this.isExiting = true;
+      this._id = res.data._id;
       res.data.directContact.forEach((element) => {
         if (element.method === "mobile") {
           mobileno = element.value;
@@ -144,6 +145,7 @@ export class HomeComponent implements OnInit {
         longitude: [res.data.contactAddress.longitude],
       });
     } else {
+      this.isExiting = false;
       this.firstFormGroup = this.formBuilder.group({
         firstNameThai: ["", [Validators.required]],
         lastNameThai: ["", [Validators.required]],
