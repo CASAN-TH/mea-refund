@@ -19,10 +19,12 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
+import { IplService } from './home/ipl.service';
 
 const appRoutes: Routes = [
   {
-    path: 'home', component: HomeComponent
+    path: 'home', component: HomeComponent,
+    resolve: { items: IplService },
   },
   {
     path: '',
