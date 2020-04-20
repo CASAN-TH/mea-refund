@@ -47,6 +47,7 @@ export class HomeComponent implements OnInit {
     // }
     
     let res = this.route.snapshot.data.items;
+    alert(JSON.stringify(res.data));
     this.isExiting = res.data ? true : false;
     this.initializeApp(res);
     let postCodeList: any = await this.iplService.getPostcodesList();
@@ -56,7 +57,7 @@ export class HomeComponent implements OnInit {
 
   ngAfterViewInit() {
     console.log("ngAfterViewInit");
-    this.initializeLiff("");
+    // this.initializeLiff("");
   }
 
   initializeLiff(myLiffId) {
