@@ -33,8 +33,8 @@ export class IplService {
     // );
     return new Promise((resolve, reject) => {
       liff.init(
-        (data) => {
-          let user = liff.getProfile();
+        async (data) => {
+          let user = await liff.getProfile();
           this.http
             .post(`${api_url}/api/involvedpartys/query`, {
               lineUserId: user.userId,
