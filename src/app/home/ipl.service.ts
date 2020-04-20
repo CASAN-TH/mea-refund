@@ -1,14 +1,30 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
+declare var liff: any;
 
 const api_url = environment.apiUrl;
+
 
 @Injectable({
   providedIn: "root",
 })
 export class IplService {
   constructor(private http: HttpClient) {}
+
+  resolve(): Observable<any> | Promise<any> | any {
+    liff.init(
+      async (data) => {
+        let userProfile = await liff.getProfile();
+        return this.queryIPL({ lineUserId: userProfile.userId })
+      },
+      (err) => {
+        // alert(JSON.stringify(err));
+        return;
+      }
+    );
+  }
 
   getPostcodesList() {
     return this.http.get(`${api_url}/api/postcodes`).toPromise();

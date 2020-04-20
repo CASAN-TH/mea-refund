@@ -3,7 +3,7 @@ import { MatStepper } from "@angular/material/stepper";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { IplService } from "./ipl.service";
 import { ValidatePID } from "./pid.validate";
-
+import { ActivatedRoute } from "@angular/router";
 
 declare var liff: any;
 
@@ -14,7 +14,7 @@ declare var liff: any;
 })
 export class HomeComponent implements OnInit {
   @ViewChild("stepper") private myStepper: MatStepper;
-  @ViewChild('firstNameThai') nameInput: ElementRef;
+  @ViewChild("firstNameThai") nameInput: ElementRef;
 
   userProfile: any;
   isExiting: boolean = false;
@@ -32,26 +32,30 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
     private iplService: IplService
   ) {
     this.myLiffId = "1654060178-kB8gYpra";
   }
 
   async ngOnInit() {
-    console.log("ngOnInit")
+    console.log("ngOnInit");
     // if (!this.myLiffId) {
     //   this.initializeApp();
     // } else {
     //   this.initializeLiff(this.myLiffId);
     // }
-    this.initializeApp();
+    
+    let res = this.route.snapshot.data.items;
+    this.isExiting = res.data ? true : false;
+    this.initializeApp(res);
     let postCodeList: any = await this.iplService.getPostcodesList();
     this.temp = postCodeList.data;
     this.postcodesList = postCodeList.data;
   }
 
   ngAfterViewInit() {
-    console.log("ngAfterViewInit")
+    console.log("ngAfterViewInit");
     this.initializeLiff("");
   }
 
@@ -80,38 +84,50 @@ export class HomeComponent implements OnInit {
     );
   }
 
-
-
-  initializeApp() {
+  initializeApp(res: any) {
     let MOBILE_PATTERN = /^[0-9]{10,10}$/;
     let PERSONAL_CARDID_PATTERN = /^[0-9]{13,13}$/;
     let POSTCODE_PATTERN = /^[0-9]{5,5}$/;
 
     this.firstFormGroup = this.formBuilder.group({
-      firstNameThai: ["", [Validators.required]],
-      lastNameThai: ["", [Validators.required]],
+      firstNameThai: [
+        res.data.personalInfo.firstNameThai || "",
+        [Validators.required],
+      ],
+      lastNameThai: [
+        res.data.personalInfo.lastNameThai || "",
+        [Validators.required],
+      ],
       citizenId: [
-        "",
+        res.data.personalInfo.citizenId || "",
         [ValidatePID],
       ],
       mobileNumber: [
-        "",
+        res.data.directContact.forEach((element) => {
+          if (element.method === "mobile") {
+            return element.value;
+          }
+        }) || "",
         [Validators.required, Validators.pattern(MOBILE_PATTERN)],
       ],
-      lineUID: this.userProfile ? this.userProfile.userId : null,
+      lineUID: res.data.directContact.forEach((element) => {
+        if (element.method === "lineUserId") {
+          return element.value;
+        }
+      }) || "",
     });
     this.secondFormGroup = this.formBuilder.group({
       addressPostalCode: [
-        "",
+        res.data.contactAddress.addressPostalCode || "",
         [Validators.required, , Validators.pattern(POSTCODE_PATTERN)],
       ],
-      addressProvince: ["", Validators.required],
-      addressDistrict: ["", Validators.required],
-      addressSubDistrict: ["", Validators.required],
-      addressStreet: ["", Validators.required],
-      addressLine1: ["", Validators.required],
-      latitude: [""],
-      longitude: [""],
+      addressProvince: [res.data.contactAddress.addressProvince || "", Validators.required],
+      addressDistrict: [res.data.contactAddress.addressDistrict || "", Validators.required],
+      addressSubDistrict: [res.data.contactAddress.addressSubDistrict || "", Validators.required],
+      addressStreet: [res.data.contactAddress.addressStreet || "", Validators.required],
+      addressLine1: [res.data.contactAddress.addressLine1 || "", Validators.required],
+      latitude: [res.data.contactAddress.latitude],
+      longitude: [res.data.contactAddress.longitude],
     });
   }
 
@@ -228,7 +244,7 @@ export class HomeComponent implements OnInit {
       };
       await this.iplService.saveIPL(body);
       // this.myStepper.next();
-     this.closeWindows();
+      this.closeWindows();
     }
   }
 

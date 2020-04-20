@@ -1,5 +1,5 @@
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
-  <mat-step>
+  <!-- <mat-step>
     <div fxLayout="row wrap" *ngIf="!isExiting">
       <div fxFlex="100" fxLayoutAlign="start center">
         ท่านยังไม่เคยลงทะเบียนผ่านระบบนี้
@@ -38,7 +38,7 @@
         </button>
       </div>
     </div>
-  </mat-step>
+  </mat-step> -->
   <mat-step [stepControl]="firstFormGroup">
     <!-- <ng-template matStepLabel>ข้อมูลสมาชิก</ng-template> -->
     <div fxLayout="row wrap">
