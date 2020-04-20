@@ -90,6 +90,8 @@ export class HomeComponent implements OnInit {
     let luid = "";
     let mobileno = "";
 
+    console.log(res);
+
     if (res.data) {
       this.isExiting = true;
       this._id = res.data._id;

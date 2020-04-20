@@ -13,53 +13,35 @@ export class IplService {
   constructor(private http: HttpClient) {}
 
   resolve(): Observable<any> | Promise<any> | any {
-    // liff.init(
-    //   async (data) => {
-    //     let userProfile = await liff.getProfile();
-    //     alert(userProfile.userId);
-    //     this.http
-    //       .post(`${api_url}/api/involvedpartys/query`, {
-    //         lineUserId: userProfile.userId,
-    //       })
-    //       .subscribe((res) => {
-    //         alert(JSON.stringify(res));
-    //         return res;
-    //       });
-    //   },
-    //   (err) => {
-    //     // alert(JSON.stringify(err));
-    //     return;
-    //   }
-    // );
-    return new Promise((resolve, reject) => {
-      liff.init(
-        async (data) => {
-          let user = await liff.getProfile();
-          this.http
-            .post(`${api_url}/api/involvedpartys/query`, {
-              lineUserId: user.userId,
-            })
-            .subscribe(
-              (res: any) => {
-                // alert(JSON.stringify(res));
-                if (res.data) {
-                  resolve(res);
-                } else {
-                  resolve({
-                    lineUserId: user.userId,
-                  });
-                }
-              },
-              (err) => {
-                reject(err);
-              }
-            );
-        },
-        (err) => {
-          reject(err);
-        }
-      );
-    });
+    // return new Promise((resolve, reject) => {
+    //   liff.init(
+    //     async (data) => {
+    //       let user = await liff.getProfile();
+    //       this.http
+    //         .post(`${api_url}/api/involvedpartys/query`, {
+    //           lineUserId: user.userId,
+    //         })
+    //         .subscribe(
+    //           (res: any) => {
+    //             // alert(JSON.stringify(res));
+    //             if (res.data) {
+    //               resolve(res);
+    //             } else {
+    //               resolve({
+    //                 lineUserId: user.userId,
+    //               });
+    //             }
+    //           },
+    //           (err) => {
+    //             reject(err);
+    //           }
+    //         );
+    //     },
+    //     (err) => {
+    //       reject(err);
+    //     }
+    //   );
+    // });
   }
 
   getPostcodesList() {
