@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
     // }
 
     let res = this.route.snapshot.data.items;
-
+    console.log(res || " no data!!! ");
     this.isExiting = res ? true : false;
     this.initializeApp(res || "");
     let postCodeList: any = await this.iplService.getPostcodesList();

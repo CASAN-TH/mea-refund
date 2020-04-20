@@ -18,6 +18,7 @@ export class IplService {
       async (data) => {
         let userProfile = await liff.getProfile();
         // return this.queryIPL({ lineUserId: userProfile.userId })
+        alert(userProfile.userId);
         return this.http.post(`${api_url}/api/involvedpartys/query`, { lineUserId: userProfile.userId })
       },
       (err) => {
