@@ -69,7 +69,7 @@ export class HomeComponent implements OnInit {
         console.log(res);
 
         this.bindingData(res);
-        this.nameInput.nativeElement.focus();
+        // this.nameInput.nativeElement.focus();
         // if not existing then set form blank
         this.firstFormGroup.controls["lineUID"].setValue(
           this.userProfile.userId
