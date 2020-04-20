@@ -45,9 +45,8 @@ export class HomeComponent implements OnInit {
     // } else {
     //   this.initializeLiff(this.myLiffId);
     // }
-
+    console.log(this.route.snapshot.data);
     let res = this.route.snapshot.data.items;
-    console.log(res || " no data!!! ");
     this.isExiting = res ? true : false;
     this.initializeApp(res || "");
     let postCodeList: any = await this.iplService.getPostcodesList();
