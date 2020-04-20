@@ -40,7 +40,7 @@ export class IplService {
               lineUserId: user.userId,
             })
             .subscribe(
-              (res) => {
+              (res: any) => {
                 resolve(res);
               },
               (err) => {
