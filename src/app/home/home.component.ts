@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
     // } else {
     //   this.initializeLiff(this.myLiffId);
     // }
-    alert(JSON.stringify(this.route.snapshot.data.items));
+    // alert(JSON.stringify(this.route.snapshot.data.items));
     let res = this.route.snapshot.data.items;
     this.isExiting = res ? true : false;
     this.initializeApp(res || "");
@@ -88,8 +88,17 @@ export class HomeComponent implements OnInit {
     let MOBILE_PATTERN = /^[0-9]{10,10}$/;
     let PERSONAL_CARDID_PATTERN = /^[0-9]{13,13}$/;
     let POSTCODE_PATTERN = /^[0-9]{5,5}$/;
+    let luid = "";
+    let mobileno = "";
 
     if (res.data) {
+      res.data.directContact.forEach((element) => {
+        if (element.method === "mobile") {
+          mobileno = element.value;
+        } else if (element.method === "lineUserId") {
+          luid = element.value;
+        }
+      });
       this.firstFormGroup = this.formBuilder.group({
         firstNameThai: [
           res.data.personalInfo.firstNameThai || "",
@@ -101,19 +110,10 @@ export class HomeComponent implements OnInit {
         ],
         citizenId: [res.data.personalInfo.citizenId || "", [ValidatePID]],
         mobileNumber: [
-          res.data.directContact.forEach((element) => {
-            if (element.method === "mobile") {
-              return element.value;
-            }
-          }) || "",
+          mobileno,
           [Validators.required, Validators.pattern(MOBILE_PATTERN)],
         ],
-        lineUID:
-          res.data.directContact.forEach((element) => {
-            if (element.method === "lineUserId") {
-              return element.value;
-            }
-          }) || "",
+        lineUID: luid,
       });
       this.secondFormGroup = this.formBuilder.group({
         addressPostalCode: [
