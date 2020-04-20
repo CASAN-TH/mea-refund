@@ -152,7 +152,7 @@ export class HomeComponent implements OnInit {
           "",
           [Validators.required, Validators.pattern(MOBILE_PATTERN)],
         ],
-        lineUID: "",
+        lineUID: res.lineUserId,
       });
       this.secondFormGroup = this.formBuilder.group({
         addressPostalCode: [

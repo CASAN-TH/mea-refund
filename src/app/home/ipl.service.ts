@@ -42,7 +42,13 @@ export class IplService {
             .subscribe(
               (res: any) => {
                 // alert(JSON.stringify(res));
-                resolve(res);
+                if (res.data) {
+                  resolve(res);
+                } else {
+                  resolve({
+                    lineUserId: user.userId,
+                  });
+                }
               },
               (err) => {
                 reject(err);
