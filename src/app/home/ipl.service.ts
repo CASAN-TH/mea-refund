@@ -1,11 +1,10 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { environment } from "src/environments/environment";
+import { Observable } from "rxjs";
 declare var liff: any;
 
 const api_url = environment.apiUrl;
-
 
 @Injectable({
   providedIn: "root",
@@ -19,7 +18,14 @@ export class IplService {
         let userProfile = await liff.getProfile();
         // return this.queryIPL({ lineUserId: userProfile.userId })
         alert(userProfile.userId);
-        return this.http.post(`${api_url}/api/involvedpartys/query`, { lineUserId: userProfile.userId })
+        this.http
+          .post(`${api_url}/api/involvedpartys/query`, {
+            lineUserId: userProfile.userId,
+          })
+          .subscribe((res) => {
+            alert(JSON.stringify(res));
+            return res;
+          });
       },
       (err) => {
         // alert(JSON.stringify(err));
@@ -33,7 +39,9 @@ export class IplService {
   }
 
   queryIPL(body) {
-    return this.http.post(`${api_url}/api/involvedpartys/query`, body).toPromise();
+    return this.http
+      .post(`${api_url}/api/involvedpartys/query`, body)
+      .toPromise();
   }
 
   saveIPL(body) {
@@ -41,6 +49,8 @@ export class IplService {
   }
 
   updateIPL(body) {
-    return this.http.put(`${api_url}/api/involvedpartys/${body._id}`, body).toPromise();
+    return this.http
+      .put(`${api_url}/api/involvedpartys/${body._id}`, body)
+      .toPromise();
   }
 }
