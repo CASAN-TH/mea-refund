@@ -93,7 +93,7 @@ export class HomeComponent implements OnInit {
       lastNameThai: ["", [Validators.required]],
       citizenId: [
         "",
-        [Validators.required, Validators.pattern(PERSONAL_CARDID_PATTERN), ValidatePID],
+        [ValidatePID],
       ],
       mobileNumber: [
         "",

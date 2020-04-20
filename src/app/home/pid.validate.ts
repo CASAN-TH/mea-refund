@@ -3,6 +3,9 @@ import { AbstractControl } from "@angular/forms";
 export function ValidatePID(
   control: AbstractControl
 ): { [key: string]: boolean } | null {
+  if(control.value.length === 0){
+    return null;
+  }
   let total = 0;
   let iPID;
   let chk;
