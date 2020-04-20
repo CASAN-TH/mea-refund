@@ -2,12 +2,42 @@
   <mat-step>
     <div fxLayout="row wrap" *ngIf="!isExiting">
       <div fxFlex="100" fxLayoutAlign="start center">
-        ตรวจสอบข้อมูลสมาชิก
+        ท่านยังไม่เคยลงทะเบียนผ่านระบบนี้
+      </div>
+      <div fxFlex="100" fxLayoutAlign="start center">
+        กรุณาคลิ๊กปุ่ม "ลงทะเบียน"
       </div>
     </div>
-    <button mat-raised-button color="warn" matStepperNext>
-      ถัดไป
-    </button>
+    <div fxLayout="row wrap" *ngIf="isExiting">
+      <div fxFlex="100" fxLayoutAlign="start center">
+        ท่านเคยลงทะเบียนผ่านระบบแล้ว ตรวจสอบข้อมูลสมาชิก
+      </div>
+      <div fxFlex="100" fxLayoutAlign="start center">
+        ท่านต้องการตรวจสอบ และ แก้ไขข้อมูลใช่หรือไม่ ?
+      </div>
+    </div>
+    <div fxFlex fxLayoutAlign="center center" *ngIf="!isExiting">
+      <button mat-raised-button color="primary" matStepperNext>
+        ลงทะเบียน
+      </button>
+    </div>
+    <div
+      fxLayout="row wrap"
+      fxFlex
+      fxLayoutAlign="center center"
+      *ngIf="isExiting"
+    >
+      <div fxFlex="30" fxLayoutAlign="center center">
+        <button mat-raised-button color="warn" (click)="close()">
+          ไม่
+        </button>
+      </div>
+      <div fxFlex="70" fxLayoutAlign="center center">
+        <button mat-raised-button color="primary" matStepperNext>
+          ตรวจสอบและแก้ไขข้อมูล
+        </button>
+      </div>
+    </div>
   </mat-step>
   <mat-step [stepControl]="firstFormGroup">
     <!-- <ng-template matStepLabel>ข้อมูลสมาชิก</ng-template> -->

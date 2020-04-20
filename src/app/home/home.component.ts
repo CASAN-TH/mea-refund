@@ -245,6 +245,12 @@ export class HomeComponent implements OnInit {
     } catch (error) {}
   }
 
+  async close() {
+    try {
+      liff.closeWindow();
+    } catch (error) {}
+  }
+
   updateFilter(event) {
     //change search keyword to lower case
     const val = event.target.value.toLowerCase();
