@@ -32,12 +32,27 @@ export class IplService {
     //   }
     // );
     return new Promise((resolve, reject) => {
-      liff.init(data => {
-        resolve(liff.getProfile())
-      }, err=>{
-        reject(err)
-      })
-    })
+      liff.init(
+        (data) => {
+          let user = liff.getProfile();
+          this.http
+            .post(`${api_url}/api/involvedpartys/query`, {
+              lineUserId: user.userId,
+            })
+            .subscribe(
+              (res) => {
+                resolve(res);
+              },
+              (err) => {
+                reject(err);
+              }
+            );
+        },
+        (err) => {
+          reject(err);
+        }
+      );
+    });
   }
 
   getPostcodesList() {
