@@ -13,25 +13,31 @@ export class IplService {
   constructor(private http: HttpClient) {}
 
   resolve(): Observable<any> | Promise<any> | any {
-    liff.init(
-      async (data) => {
-        let userProfile = await liff.getProfile();
-        // return this.queryIPL({ lineUserId: userProfile.userId })
-        alert(userProfile.userId);
-        this.http
-          .post(`${api_url}/api/involvedpartys/query`, {
-            lineUserId: userProfile.userId,
-          })
-          .subscribe((res) => {
-            alert(JSON.stringify(res));
-            return res;
-          });
-      },
-      (err) => {
-        // alert(JSON.stringify(err));
-        return;
-      }
-    );
+    // liff.init(
+    //   async (data) => {
+    //     let userProfile = await liff.getProfile();
+    //     alert(userProfile.userId);
+    //     this.http
+    //       .post(`${api_url}/api/involvedpartys/query`, {
+    //         lineUserId: userProfile.userId,
+    //       })
+    //       .subscribe((res) => {
+    //         alert(JSON.stringify(res));
+    //         return res;
+    //       });
+    //   },
+    //   (err) => {
+    //     // alert(JSON.stringify(err));
+    //     return;
+    //   }
+    // );
+    return new Promise((resolve, reject) => {
+      liff.init(data => {
+        resolve(liff.getProfile())
+      }, err=>{
+        reject(err)
+      })
+    })
   }
 
   getPostcodesList() {
