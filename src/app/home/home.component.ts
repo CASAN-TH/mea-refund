@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
     // } else {
     //   this.initializeLiff(this.myLiffId);
     // }
-    
+    alert("hi");
     let res = this.route.snapshot.data.items;
     alert(JSON.stringify(res.data));
     this.isExiting = res.data ? true : false;
