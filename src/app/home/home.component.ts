@@ -39,11 +39,12 @@ export class HomeComponent implements OnInit {
 
   async ngOnInit() {
     console.log("ngOnInit")
-    if (!this.myLiffId) {
-      this.initializeApp();
-    } else {
-      this.initializeLiff(this.myLiffId);
-    }
+    // if (!this.myLiffId) {
+    //   this.initializeApp();
+    // } else {
+    //   this.initializeLiff(this.myLiffId);
+    // }
+    this.initializeApp();
     let postCodeList: any = await this.iplService.getPostcodesList();
     this.temp = postCodeList.data;
     this.postcodesList = postCodeList.data;
@@ -51,12 +52,10 @@ export class HomeComponent implements OnInit {
 
   ngAfterViewInit() {
     console.log("ngAfterViewInit")
-    
+    this.initializeLiff("");
   }
 
   initializeLiff(myLiffId) {
-    this.initializeApp();
-
     liff.init(
       async (data) => {
         this.userProfile = await liff.getProfile();
