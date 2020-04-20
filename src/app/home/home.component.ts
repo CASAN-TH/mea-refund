@@ -45,12 +45,11 @@ export class HomeComponent implements OnInit {
     // } else {
     //   this.initializeLiff(this.myLiffId);
     // }
-    alert("hi");
-    alert(JSON.stringify(this.route.snapshot.data));
+
     let res = this.route.snapshot.data.items;
-    alert(JSON.stringify(res.data));
-    this.isExiting = res.data ? true : false;
-    this.initializeApp(res);
+
+    this.isExiting = res ? true : false;
+    this.initializeApp(res || "");
     let postCodeList: any = await this.iplService.getPostcodesList();
     this.temp = postCodeList.data;
     this.postcodesList = postCodeList.data;
@@ -91,46 +90,85 @@ export class HomeComponent implements OnInit {
     let PERSONAL_CARDID_PATTERN = /^[0-9]{13,13}$/;
     let POSTCODE_PATTERN = /^[0-9]{5,5}$/;
 
-    this.firstFormGroup = this.formBuilder.group({
-      firstNameThai: [
-        res.data.personalInfo.firstNameThai || "",
-        [Validators.required],
-      ],
-      lastNameThai: [
-        res.data.personalInfo.lastNameThai || "",
-        [Validators.required],
-      ],
-      citizenId: [
-        res.data.personalInfo.citizenId || "",
-        [ValidatePID],
-      ],
-      mobileNumber: [
-        res.data.directContact.forEach((element) => {
-          if (element.method === "mobile") {
-            return element.value;
-          }
-        }) || "",
-        [Validators.required, Validators.pattern(MOBILE_PATTERN)],
-      ],
-      lineUID: res.data.directContact.forEach((element) => {
-        if (element.method === "lineUserId") {
-          return element.value;
-        }
-      }) || "",
-    });
-    this.secondFormGroup = this.formBuilder.group({
-      addressPostalCode: [
-        res.data.contactAddress.addressPostalCode || "",
-        [Validators.required, , Validators.pattern(POSTCODE_PATTERN)],
-      ],
-      addressProvince: [res.data.contactAddress.addressProvince || "", Validators.required],
-      addressDistrict: [res.data.contactAddress.addressDistrict || "", Validators.required],
-      addressSubDistrict: [res.data.contactAddress.addressSubDistrict || "", Validators.required],
-      addressStreet: [res.data.contactAddress.addressStreet || "", Validators.required],
-      addressLine1: [res.data.contactAddress.addressLine1 || "", Validators.required],
-      latitude: [res.data.contactAddress.latitude],
-      longitude: [res.data.contactAddress.longitude],
-    });
+    if (res.data) {
+      this.firstFormGroup = this.formBuilder.group({
+        firstNameThai: [
+          res.data.personalInfo.firstNameThai || "",
+          [Validators.required],
+        ],
+        lastNameThai: [
+          res.data.personalInfo.lastNameThai || "",
+          [Validators.required],
+        ],
+        citizenId: [res.data.personalInfo.citizenId || "", [ValidatePID]],
+        mobileNumber: [
+          res.data.directContact.forEach((element) => {
+            if (element.method === "mobile") {
+              return element.value;
+            }
+          }) || "",
+          [Validators.required, Validators.pattern(MOBILE_PATTERN)],
+        ],
+        lineUID:
+          res.data.directContact.forEach((element) => {
+            if (element.method === "lineUserId") {
+              return element.value;
+            }
+          }) || "",
+      });
+      this.secondFormGroup = this.formBuilder.group({
+        addressPostalCode: [
+          res.data.contactAddress.addressPostalCode || "",
+          [Validators.required, , Validators.pattern(POSTCODE_PATTERN)],
+        ],
+        addressProvince: [
+          res.data.contactAddress.addressProvince || "",
+          Validators.required,
+        ],
+        addressDistrict: [
+          res.data.contactAddress.addressDistrict || "",
+          Validators.required,
+        ],
+        addressSubDistrict: [
+          res.data.contactAddress.addressSubDistrict || "",
+          Validators.required,
+        ],
+        addressStreet: [
+          res.data.contactAddress.addressStreet || "",
+          Validators.required,
+        ],
+        addressLine1: [
+          res.data.contactAddress.addressLine1 || "",
+          Validators.required,
+        ],
+        latitude: [res.data.contactAddress.latitude],
+        longitude: [res.data.contactAddress.longitude],
+      });
+    } else {
+      this.firstFormGroup = this.formBuilder.group({
+        firstNameThai: ["", [Validators.required]],
+        lastNameThai: ["", [Validators.required]],
+        citizenId: ["", [ValidatePID]],
+        mobileNumber: [
+          "",
+          [Validators.required, Validators.pattern(MOBILE_PATTERN)],
+        ],
+        lineUID: "",
+      });
+      this.secondFormGroup = this.formBuilder.group({
+        addressPostalCode: [
+          "",
+          [Validators.required, , Validators.pattern(POSTCODE_PATTERN)],
+        ],
+        addressProvince: ["", Validators.required],
+        addressDistrict: ["", Validators.required],
+        addressSubDistrict: ["", Validators.required],
+        addressStreet: ["", Validators.required],
+        addressLine1: ["", Validators.required],
+        latitude: [""],
+        longitude: [""],
+      });
+    }
   }
 
   bindingData(res: any) {
