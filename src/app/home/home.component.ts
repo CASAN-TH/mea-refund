@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
 
   userProfile: any;
   isExiting: boolean = false;
+  isShowPolicyDesc: Boolean = false;
 
   postcodesList: any = [];
   temp: any = [];
@@ -334,5 +335,9 @@ export class HomeComponent implements OnInit {
     this.secondFormGroup.controls["addressProvince"].setValue(province);
     this.secondFormGroup.controls["addressDistrict"].setValue(district);
     this.secondFormGroup.controls["addressSubDistrict"].setValue(subdistrict);
+  }
+
+  onPolicyClick() {
+    this.isShowPolicyDesc = !this.isShowPolicyDesc;
   }
 }

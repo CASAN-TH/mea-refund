@@ -114,9 +114,15 @@
       <mat-label class="accept-text" *ngIf="isExiting"
         >ข้อมูลถูกต้องแล้ว</mat-label
       >
-      <mat-label class="btn-more-detail" *ngIf="!isExiting"
+      <mat-label class="btn-more-detail" *ngIf="!isExiting" (click)="onPolicyClick()"
         >เงื่อนไขการสมัครสมาชิก</mat-label
       >
+    </div>
+
+    <div fxLayout="column" *ngIf="isShowPolicyDesc">
+      <div fxFlex="100" fxLayoutAlign="start center">
+        เงื่อนไขการสมัครสมาชิก
+      </div>
     </div>
 
     <div class="btn-container">
